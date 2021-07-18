@@ -10,6 +10,7 @@ namespace Lab456.ViewModels
 {
     public class CourseViewModel
     {
+        public int Id { get; set; }
         [Required]
         public string Place { get; set; }
         [Required]
@@ -21,7 +22,7 @@ namespace Lab456.ViewModels
         [Required]
         public byte Category { get; set; }
         public IEnumerable<Category> Categories { get; set; }
-        public int Id { get; internal set; }
+     
 
         public DateTime GetDateTime()
         {

@@ -45,7 +45,7 @@ namespace Lab456.Controllers
                 CategoryId = viewModel.Category,
                 Place = viewModel.Place
             };
-            _dbContext.Courses.Add(course);
+            _dbContext.Course.Add(course);
             _dbContext.SaveChanges();
             return RedirectToAction("Mine", "Courses");
         }
@@ -80,7 +80,7 @@ namespace Lab456.Controllers
         public ActionResult Mine()
         {
             var userId = User.Identity.GetUserId();
-            var courses = _dbContext.Courses
+            var courses = _dbContext.Course
                 .Where(c => c.LecturerId == userId && c.DateTime > DateTime.Now)
                 .Include(l => l.Lecturer)
                 .Include(c => c.Category)
@@ -91,7 +91,7 @@ namespace Lab456.Controllers
         public ActionResult Edit(int id)
         {
             var userId = User.Identity.GetUserId();
-            var course = _dbContext.Courses.Single(c => c.Id == id && c.LecturerId == userId);
+            var course = _dbContext.Course.Single(c => c.Id == id && c.LecturerId == userId);
             var viewModel = new CourseViewModel
             {
                 Categories = _dbContext.Categories.ToList(),
@@ -117,7 +117,7 @@ namespace Lab456.Controllers
                 return View("Create", viewModel);
             }
             var userId = User.Identity.GetUserId();
-            var course = _dbContext.Courses.Single(c => c.Id == viewModel.Id && c.LecturerId == userId);
+            var course = _dbContext.Course.Single(c => c.Id == viewModel.Id && c.LecturerId == userId);
             course.Place = viewModel.Place;
             course.DateTime = viewModel.GetDateTime();
             course.CategoryId = viewModel.Category;

@@ -19,7 +19,7 @@ namespace Lab456.Models
         public string Place { get; set; }
         public DateTime DateTime { get; set; }
         public Category Category { get; set; }
-        [Required]
+        
         public byte CategoryId { get; set; }
     }
 }

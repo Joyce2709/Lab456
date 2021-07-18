@@ -1,12 +1,13 @@
-﻿@{
+﻿@using System.Web.Razor.Parser.SyntaxTree
+@using Lab456.Models
+@using Microsoft.AspNet.Identity
+@model Lab456.ViewModels.CoursesViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-@model Lab456.ViewModels.CoursesViewModel
-@using Microsoft.AspNet.Identity
-@using System.Web.Razor.Parser.SyntaxTree
-
-
+<h1>Trang chủ</h1>
 <div class="row">
     <ul class="course">
         @foreach (var course in Model.UpcommingCourses)

@@ -18,7 +18,7 @@ namespace Lab456.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var upcomingCourses = _dbContext.Courses
+            var upcomingCourses = _dbContext.Course
                 .Include(c => c.Lecturer)
                 .Include(c => c.Category)
                 .Where(c => c.DateTime > DateTime.Now && c.IsCanceled == false).ToList();

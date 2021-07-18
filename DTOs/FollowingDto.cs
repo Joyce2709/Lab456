@@ -8,6 +8,6 @@ namespace Lab456.DTOs
     public class FollowingDto
     {
         public string FolloweeId { get; set; }
-        public int CourseId { get; set; }
+        
     }
 }
