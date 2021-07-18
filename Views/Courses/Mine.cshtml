@@ -35,28 +35,52 @@
 </ul>
 @section scripts{
     <script>
-        $(document).ready(
-            function () {
-                $(".js-cancel-course").click(function (e) {
-                    e.preventDefault();
-                    var link = $(e.target);
-                    bootbox.confirm("Are you sure to cancel?",
+        $(document).ready(function () {
+            $('.js-toggle-attendance').click(function (e) {
+                var button = $(e.target);
+                $.post("/api/attendances", { courseId: button.attr("data-course-id") })
+                    .done(function (response) {
+                        if (response.isFollow) {
+                            button.removeClass('btn-default')
+                                .addClass('btn-info')
+                                .text('Going');
+
+                        }
+                        else {
+                            button.removeClass('btn-info')
+                                .addClass('btn-default')
+                                .text('Going?');
+                        }
+
+                    })
+                    .fail(
                         function () {
-                            $.ajax({
-                                url: "/api/courses/" + link.attr("data-course-id"),
-                                method: "DELETE"
-                            })
-                                .done(function () {
-                                    link.parents("li").fadeOut(function () {
-                                        $(this).remove();
-                                    })
-                                })
-                                .fail(function () {
-                                    alert("Something failed!");
-                                });
+                            alert('Songthing failed!');
                         });
-                });
-            }
-        )
+            });
+            $('.js-toggle-follow').click(function (e) {
+                var button = $(e.target);
+                $.post("/api/followings", { followeeId: button.attr("data-user-id") })
+                    .done((response) => {
+                        if (response.isFollow) {
+                            button.removeClass('btn-default')
+                                .addClass('btn-info')
+                                .text('Following');
+
+                        }
+                        else {
+                            button.removeClass('btn-info')
+                                .addClass('btn-default')
+                                .text('Follow?');
+                        }
+
+
+                    })
+                    .fail(
+                        function () {s
+                            alert('Songthing failed!');
+                        });
+            });
+        })
     </script>
 }

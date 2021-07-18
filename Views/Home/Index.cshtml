@@ -29,30 +29,19 @@
                             if (Model.IsFollowCourses != null)
                             {
                                 <span>
-
-                                    @if (Model.IsFollowLecturers.Any(d => d.Followee.Id == @course.LecturerId))
+                                    @if (Model.IsFollowLecturers.Any(d => d.Followee.Id == course.LecturerId))
                                     {
-
-
-                                        <button class="btn btn-info btn-sm js-toggle-follow" data-user-id="@course.LecturerId">
-                                            Following
-
-                                        </button>
+                                        <button class="btn btn-info btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Following</button>
                                     }
                                     else
                                     {
-                                        var userId = @User.Identity.GetUserId();
-                                        <button class="btn btn-default btn-sm js-toggle-follow" data-user-id="@course.LecturerId">
-                                            Follow?
 
-                                        </button>
+                                        <button class="btn btn-default btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Follow?</button>
                                     }
                                 </span>
 
                             }
                         }
-
-
                     </div>
                     <div class="category">
                         @course.Category.name
@@ -61,7 +50,6 @@
                             if (Model.IsFollowCourses != null)
                             {
                                 <span>
-
                                     @if (Model.IsFollowCourses.Any(d => d.Course.Id == course.Id))
                                     {
                                         <button data-course-id="@course.Id" class="btn btn-info btn-sm js-toggle-attendance">Going</button>
@@ -110,28 +98,19 @@
                 $('.js-toggle-follow').click(function (e) {
                     var button = $(e.target);
                     $.post("/api/followings", { followeeId: button.attr("data-user-id") })
-                        .done((response) => {
+                        .done(function (response) {
                             if (response.isFollow) {
+                                button.removeClass('btn-default')
+                                    .addClass('btn-info')
+                                    .text('Following');
 
-                                $('.js-toggle-follow').map((index, value) => {
-                                    console.log($(value).attr('data-user-id'), response.followeeId);
-                                    if ($(value).attr('data-user-id') == response.followeeId) {
-
-                                        return $(value).removeClass('btn-default')
-                                            .addClass('btn-info')
-                                            .text('Following');
-                                    }
-                                });
-                            } else {
-                                $('.js-toggle-follow').map((index, value) => {
-                                    if ($(value).attr('data-user-id') == response.followeeId) {
-                                        $(value).removeClass('btn-info')
-                                            .addClass('btn-default')
-                                            .text('Follow?');
-                                    }
-                                });
                             }
-
+                            else {
+                                button.removeClass('btn-info')
+                                    .addClass('btn-default')
+                                    .text('Follow?');
+                            }
+                            
 
                         })
                         .fail(
