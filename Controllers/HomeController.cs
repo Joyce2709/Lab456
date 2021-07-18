@@ -3,6 +3,9 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
+using Lab456.ViewModels;
+using Microsoft.AspNet.Identity;
+
 namespace Lab456.Controllers
 {
     public class HomeController : Controller
@@ -14,8 +17,26 @@ namespace Lab456.Controllers
         }
         public ActionResult Index()
         {
-            var upcommingCourse = _dbContext.Courses.Include(c => c.Lecturer).Include(c => c.Category).Where(c => c.DateTime > DateTime.Now);
-            return View(upcommingCourse);
+            var userId = User.Identity.GetUserId();
+            var upcomingCourses = _dbContext.Courses
+                .Include(c => c.Lecturer)
+                .Include(c => c.Category)
+                .Where(c => c.DateTime > DateTime.Now && c.IsCanceled == false).ToList();
+            var isFollowCourses = _dbContext.Attendances
+                .Where(a => a.AttendeeId == userId)
+                .Include(c => c.Course);
+            var isFollowLecturers = _dbContext.Followings
+                .Where(a => a.FollowerId == userId)
+                .Include(c => c.Followee);
+            var viewModel = new CoursesViewModel()
+            {
+                UpcommingCourses = upcomingCourses,
+                ShowAction = User.Identity.IsAuthenticated,
+                IsFollowCourses = isFollowCourses,
+                IsFollowLecturers = isFollowLecturers,
+
+            };
+            return View(viewModel);
         }
 
         public ActionResult About()

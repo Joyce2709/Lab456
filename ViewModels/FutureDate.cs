@@ -18,5 +18,5 @@ namespace Lab456.Models
         }
 
     }
-    
+
 }
