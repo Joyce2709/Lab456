@@ -7,7 +7,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<h1>Trang chủ</h1>
+<h1>Index</h1>
 <div class="row">
     <ul class="course">
         @foreach (var course in Model.UpcommingCourses)
@@ -29,7 +29,7 @@
                             if (Model.IsFollowCourses != null)
                             {
                                 <span>
-                                    @if (Model.IsFollowLecturers.Any(d => d.Followee.Id == course.LecturerId))
+                                    @if (Model.IsFollowLecturers.Any(d => d.Followee.Id == @course.LecturerId))
                                     {
                                         <button class="btn btn-info btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Following</button>
                                     }

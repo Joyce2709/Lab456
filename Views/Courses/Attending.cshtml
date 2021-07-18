@@ -29,7 +29,7 @@
                             {
                                 <span>
 
-                                    @if (Model.IsFollowLecturers.Any(d => d.Followee.Id == course.LecturerId))
+                                    @if (Model.IsFollowLecturers.Any(d => d.Followee.Id == @course.LecturerId))
                                     {
 
 
